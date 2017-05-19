@@ -17,24 +17,26 @@ int main()
 	string pokemon[14] = { "Jynx", "Charmander", "Snorlax", "Clefairy", "Diglett", "Kakuna", "Meowth",
 						   "Nidorino", "Pikachu", "Blastoise", "Squirtle", "Ivysaur", "Bulbasaur", "Abra" };
 	
-	BinarySearchTree<string> tree;
+	BinarySearchTree tree;
 	
-	//tree.batchInsert(pokemon);
-	tree.insert("Jynx");
-	tree.insert("Charmander");
-	tree.insert("Snorlax");
-	tree.insert("Clefairy");
+	tree.batchInsert(pokemon);
+	//tree.insert("Jynx");
+	//tree.insert("Charmander");
+	//tree.insert("Snorlax");
+	//tree.insert("Clefairy");
 
+	tree.deleteNode("Squirtle");
 	tree.printInOrder();
-	cout << endl;
 
-	tree.printPreOrder();
-	cout << endl;
+	tree.deleteNode("Meowth");
+	tree.printInOrder();
 
-	tree.printPostOrder();
-	cout << endl;
+	tree.deleteNode("Blastoise");
+	tree.printInOrder();
 
-	
+	tree.deleteNode("Jynx");
+	tree.printInOrder();
+
 
 
 	return 0;

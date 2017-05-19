@@ -10,38 +10,40 @@
 
 using namespace std;
 
-template <typename Type>
 struct TreeNode
 {
-	Type data;
-	TreeNode<Type>* left;
-	TreeNode<Type>* right;
+	string data;
+	TreeNode* left;
+	TreeNode* right;
 };
 
-template <typename Type>
 class BinarySearchTree
 {
 private:
-	TreeNode<Type>* root;
-	TreeNode<Type>* getRoot();
-	void traverseInOrder(TreeNode<Type>* root, int nodeLevel);
-	void traversePreOrder(TreeNode<Type>* root, int nodeLevel);
-	void traversePostOrder(TreeNode<Type>* root, int nodeLevel);
+	TreeNode* root;
+	TreeNode* getRoot();
+	void traverseInOrder(TreeNode* root, int nodeLevel);
+	void traversePreOrder(TreeNode* root, int nodeLevel);
+	void traversePostOrder(TreeNode* root, int nodeLevel);
+	void deleteFromTree(TreeNode* &p);
 
 public:
 	BinarySearchTree();
-	void insert(Type newData);
+	~BinarySearchTree();
+	void insert(string newData);
 	void printInOrder();
 	void printPreOrder();
 	void printPostOrder();
-	void batchInsert(Type data[]);
+	void batchInsert(string data[]);
+	void deleteNode(const string deleteItem);
+
+
 
 
 
 };
 
-template<typename Type>
-inline void BinarySearchTree<Type>::batchInsert(Type data[])
+void BinarySearchTree::batchInsert(string data[])
 {
 	for (int i = 0; i < 14; i++)
 	{
@@ -49,15 +51,60 @@ inline void BinarySearchTree<Type>::batchInsert(Type data[])
 	}
 }
 
+inline void BinarySearchTree::deleteNode(const string deleteItem)
+{
+	TreeNode* current;
+	TreeNode* trailCurrent;
+	bool found = false;
 
-template <typename Type>
-TreeNode<Type> * BinarySearchTree<Type>::getRoot()
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	else
+	{
+		current = root;
+		trailCurrent = root;
+
+		while (current != nullptr && !found)
+		{
+			if (current->data == deleteItem)
+				found = true;
+			else
+			{
+				trailCurrent = current;
+
+				if (current->data > deleteItem)
+					current = current->left;
+				else
+					current = current->right;
+			}
+		}
+		
+		if (current == nullptr)
+			return;
+		else if (found)
+		{
+			if (current == root)
+				deleteFromTree(root);
+			else if (trailCurrent->data > deleteItem)
+				deleteFromTree(trailCurrent->left);
+			else
+				deleteFromTree(trailCurrent->right);
+		}
+		else
+			return;
+	}
+}
+
+
+TreeNode* BinarySearchTree::getRoot()
 {
 	return root;
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::traverseInOrder(TreeNode<Type> * root, int nodeLevel)
+void BinarySearchTree::traverseInOrder(TreeNode* root, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -76,8 +123,7 @@ void BinarySearchTree<Type>::traverseInOrder(TreeNode<Type> * root, int nodeLeve
 	}
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::traversePreOrder(TreeNode<Type> * root, int nodeLevel)
+void BinarySearchTree::traversePreOrder(TreeNode* root, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -93,8 +139,7 @@ void BinarySearchTree<Type>::traversePreOrder(TreeNode<Type> * root, int nodeLev
 	}
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::traversePostOrder(TreeNode<Type> * root, int nodeLevel)
+void BinarySearchTree::traversePostOrder(TreeNode* root, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -110,18 +155,72 @@ void BinarySearchTree<Type>::traversePostOrder(TreeNode<Type> * root, int nodeLe
 	}
 }
 
-template <typename Type>
-BinarySearchTree<Type>::BinarySearchTree()
+inline void BinarySearchTree::deleteFromTree(TreeNode *& p)
+{
+	TreeNode* current;
+	TreeNode* trailCurrent;
+	TreeNode* temp;
+
+	if (p == nullptr)
+		return;
+
+	else if (p->left == nullptr && p->right == nullptr)
+	{
+		temp = p;
+		p = nullptr;
+		delete temp;
+	}
+
+	else if (p->left == nullptr)
+	{
+		temp = p;
+		p = temp->right;
+		delete temp;
+	}
+
+	else if (p->right == nullptr)
+	{
+		temp = p;
+		p = temp->left;
+		delete temp;
+	}
+
+	else
+	{
+		current = p->left;
+		trailCurrent = nullptr;
+
+		while (current->right != nullptr)
+		{
+			trailCurrent = current;
+			current = current->right;
+		}
+
+		p->data = current->data;
+
+		if (trailCurrent == nullptr)
+			p->left = current->left;
+		else
+			trailCurrent->right = current->left;
+
+		delete current;
+	}
+}
+
+BinarySearchTree::BinarySearchTree()
 {
 	root = nullptr;
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::insert(Type newData)
+inline BinarySearchTree::~BinarySearchTree()
 {
-	TreeNode<Type>* current = root;
-	TreeNode<Type>* currentTrail = current;
-	TreeNode<Type>* newNode = new TreeNode<Type>;
+}
+
+void BinarySearchTree::insert(string newData)
+{
+	TreeNode* current = root;
+	TreeNode* currentTrail = current;
+	TreeNode* newNode = new TreeNode;
 
 	newNode->data = newData;
 	newNode->left = nullptr;
@@ -149,24 +248,21 @@ void BinarySearchTree<Type>::insert(Type newData)
 
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::printInOrder()
+void BinarySearchTree::printInOrder()
 {
 	// Initial nodeLevel is 0 which is what
 	// the second argument is
 	traverseInOrder(getRoot(), 0);
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::printPreOrder()
+void BinarySearchTree::printPreOrder()
 {
 	// Initial nodeLevel is 0 which is what
 	// the second argument is
 	traversePreOrder(getRoot(), 0);
 }
 
-template <typename Type>
-void BinarySearchTree<Type>::printPostOrder()
+void BinarySearchTree::printPostOrder()
 {
 	// Initial nodeLevel is 0 which is what
 	// the second argument is
