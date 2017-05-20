@@ -19,9 +19,9 @@ int main()
 	string pokemon[12] = { "Jynx", "Charmander", "Snorlax", "Diglett", "Kakuna", "Meowth",
 						   "Pikachu", "Blastoise", "Squirtle", "Ivysaur", "Bulbasaur", "Abra" };
 	
-	BinarySearchTree tree;
+	BinarySearchTree<string> tree;
 	tree.batchInsert(pokemon);
-	BinarySearchTree treeCopy(tree);
+	BinarySearchTree<string> treeCopy(tree);
 
 	tree.printInOrderUsingFunctionPointer();
 	cout << endl << endl;

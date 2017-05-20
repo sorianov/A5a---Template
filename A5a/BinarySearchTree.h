@@ -11,40 +11,41 @@
 
 using namespace std;
 
+template <typename DataType>
 struct TreeNode
 {
-	string data;
+	DataType data;
 	TreeNode* left;
 	TreeNode* right;
 };
 
+template <typename DataType>
 class BinarySearchTree
 {
 private:
-	TreeNode* root;
-	TreeNode* getRoot();
-	void traverseInOrder(TreeNode* root);
-	void traversePreOrder(TreeNode* root);
-	void traversePostOrder(TreeNode* root);
-	void removeNode(TreeNode* &root);
-	void deleteTree(TreeNode* &root);
-	void traverseInOrderFuncPtr(TreeNode* root, const function<void(TreeNode*, int)> &printFunction, int nodeLevel = 0);
-	void traversePostOrderFuncPtr(TreeNode* root, const function<void(TreeNode*, int)> &printFunction, int nodeLevel = 0);
-	void traversePreOrderFuncPtr(TreeNode* root, const function<void(TreeNode*, int)> &printFunction, int nodeLevel = 0);
+	TreeNode<DataType>* root;
+	void traverseInOrder(TreeNode<DataType>* root);
+	void traversePreOrder(TreeNode<DataType>* root);
+	void traversePostOrder(TreeNode<DataType>* root);
+	void removeNode(TreeNode<DataType>* &root);
+	void deleteTree(TreeNode<DataType>* &root);
+	void traverseInOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)> &printFunction, int nodeLevel = 0);
+	void traversePostOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)> &printFunction, int nodeLevel = 0);
+	void traversePreOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)> &printFunction, int nodeLevel = 0);
 
 public:
 	BinarySearchTree();
-	BinarySearchTree(const BinarySearchTree &copyTree);
+	BinarySearchTree(const BinarySearchTree<DataType> &copyTree);
 	~BinarySearchTree();
-	void insert(string newData);
-	void copy(TreeNode* originalRoot, TreeNode* &copyRoot);
+	void insert(DataType newData);
+	void copy(TreeNode<DataType>* originalRoot, TreeNode<DataType>* &copyRoot);
 	void printInOrder();
 	void printPreOrder();
 	void printPostOrder();
-	void batchInsert(string data[]);
-	void remove(const string deleteItem);
+	void batchInsert(DataType data[]);
+	void remove(const DataType deleteItem);
 	void removeAll();
-	static void genericPrint(TreeNode* root, int nodeLevel);
+	static void genericPrint(TreeNode<DataType>* root, int nodeLevel);
 	void printInOrderUsingFunctionPointer();
 	void printPostOrderUsingFunctionPointer();
 	void printPreOrderUsingFunctionPointer();
@@ -56,7 +57,8 @@ public:
 };
 
 
-void BinarySearchTree::batchInsert(string data[])
+template <typename DataType>
+void BinarySearchTree<DataType>::batchInsert(DataType data[])
 {
 	for (int i = 0; i < 12; i++)
 	{
@@ -64,10 +66,11 @@ void BinarySearchTree::batchInsert(string data[])
 	}
 }
 
-inline void BinarySearchTree::remove(const string deleteItem)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::remove(const DataType deleteItem)
 {
-	TreeNode* current;
-	TreeNode* currentTrail;
+	TreeNode<DataType>* current;
+	TreeNode<DataType>* currentTrail;
 	bool found = false;
 
 	// Empty Tree
@@ -127,39 +130,38 @@ inline void BinarySearchTree::remove(const string deleteItem)
 	}
 }
 
-inline void BinarySearchTree::removeAll()
+template <typename DataType>
+inline void BinarySearchTree<DataType>::removeAll()
 {
 	deleteTree(root);
 }
 
-inline void BinarySearchTree::genericPrint(TreeNode * root, int nodeLevel)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::genericPrint(TreeNode<DataType>* root, int nodeLevel)
 {
 	cout << root->data << "(" << nodeLevel << ")" << " ";
 }
 
-inline void BinarySearchTree::printInOrderUsingFunctionPointer()
+template <typename DataType>
+inline void BinarySearchTree<DataType>::printInOrderUsingFunctionPointer()
 {
 	traverseInOrderFuncPtr(root, genericPrint);
 }
 
-inline void BinarySearchTree::printPostOrderUsingFunctionPointer()
+template <typename DataType>
+inline void BinarySearchTree<DataType>::printPostOrderUsingFunctionPointer()
 {
 	traversePostOrderFuncPtr(root, genericPrint);
 }
 
-inline void BinarySearchTree::printPreOrderUsingFunctionPointer()
+template <typename DataType>
+inline void BinarySearchTree<DataType>::printPreOrderUsingFunctionPointer()
 {
 	traversePreOrderFuncPtr(root, genericPrint);
 }
 
-// This is unnecessary
-TreeNode* BinarySearchTree::getRoot()
-{
-	return root;
-}
-
-
-void BinarySearchTree::traverseInOrder(TreeNode* root)
+template <typename DataType>
+void BinarySearchTree<DataType>::traverseInOrder(TreeNode<DataType>* root)
 {
 	if (root != nullptr)
 	{
@@ -169,7 +171,8 @@ void BinarySearchTree::traverseInOrder(TreeNode* root)
 	}
 }
 
-void BinarySearchTree::traversePreOrder(TreeNode* root)
+template <typename DataType>
+void BinarySearchTree<DataType>::traversePreOrder(TreeNode<DataType>* root)
 {
 	if (root != nullptr)
 	{
@@ -179,7 +182,8 @@ void BinarySearchTree::traversePreOrder(TreeNode* root)
 	}
 }
 
-void BinarySearchTree::traversePostOrder(TreeNode* root)
+template <typename DataType>
+void BinarySearchTree<DataType>::traversePostOrder(TreeNode<DataType>* root)
 {
 	if (root != nullptr)
 	{
@@ -189,11 +193,12 @@ void BinarySearchTree::traversePostOrder(TreeNode* root)
 	}
 }
 
-inline void BinarySearchTree::removeNode(TreeNode *& nodeToDelete)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::removeNode(TreeNode<DataType>* &nodeToDelete)
 {
-	TreeNode* current;
-	TreeNode* currentTrail;
-	TreeNode* temp;
+	TreeNode<DataType>* current;
+	TreeNode<DataType>* currentTrail;
+	TreeNode<DataType>* temp;
 
 	// Empty tree
 	if (nodeToDelete == nullptr)
@@ -256,7 +261,8 @@ inline void BinarySearchTree::removeNode(TreeNode *& nodeToDelete)
 	}
 }
 
-inline void BinarySearchTree::deleteTree(TreeNode * &root)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::deleteTree(TreeNode<DataType>* &root)
 {
 	// Post order traversal to delete tree
 	if (root != nullptr)
@@ -268,7 +274,8 @@ inline void BinarySearchTree::deleteTree(TreeNode * &root)
 	}
 }
 
-inline void BinarySearchTree::traverseInOrderFuncPtr(TreeNode * root, const function<void(TreeNode*, int)>& printFunction, int nodeLevel)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::traverseInOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)>& printFunction, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -287,7 +294,8 @@ inline void BinarySearchTree::traverseInOrderFuncPtr(TreeNode * root, const func
 	}
 }
 
-inline void BinarySearchTree::traversePostOrderFuncPtr(TreeNode * root, const function<void(TreeNode*, int)>& printFunction, int nodeLevel)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::traversePostOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)>& printFunction, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -303,7 +311,8 @@ inline void BinarySearchTree::traversePostOrderFuncPtr(TreeNode * root, const fu
 	}
 }
 
-inline void BinarySearchTree::traversePreOrderFuncPtr(TreeNode * root, const function<void(TreeNode*, int)>& printFunction, int nodeLevel)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::traversePreOrderFuncPtr(TreeNode<DataType>* root, const function<void(TreeNode<DataType>*, int)>& printFunction, int nodeLevel)
 {
 	if (root != nullptr)
 	{
@@ -318,12 +327,14 @@ inline void BinarySearchTree::traversePreOrderFuncPtr(TreeNode * root, const fun
 	}
 }
 
-BinarySearchTree::BinarySearchTree()
+template <typename DataType>
+BinarySearchTree<DataType>::BinarySearchTree()
 {
 	root = nullptr;
 }
 
-inline BinarySearchTree::BinarySearchTree(const BinarySearchTree & copyTree)
+template <typename DataType>
+inline BinarySearchTree<DataType>::BinarySearchTree(const BinarySearchTree<DataType> & copyTree)
 {
 	if (copyTree.root == nullptr)
 		root = nullptr;
@@ -331,16 +342,18 @@ inline BinarySearchTree::BinarySearchTree(const BinarySearchTree & copyTree)
 		copy(copyTree.root, root);
 }
 
-inline BinarySearchTree::~BinarySearchTree()
+template <typename DataType>
+inline BinarySearchTree<DataType>::~BinarySearchTree()
 {
 	removeAll();
 }
 
-void BinarySearchTree::insert(string newData)
+template <typename DataType>
+void BinarySearchTree<DataType>::insert(DataType newData)
 {
-	TreeNode* current = root;
-	TreeNode* currentTrail = current;
-	TreeNode* newNode = new TreeNode;
+	TreeNode<DataType>* current = root;
+	TreeNode<DataType>* currentTrail = current;
+	TreeNode<DataType>* newNode = new TreeNode<DataType>;
 
 	newNode->data = newData;
 	newNode->left = nullptr;
@@ -368,31 +381,35 @@ void BinarySearchTree::insert(string newData)
 
 }
 
-inline void BinarySearchTree::copy(TreeNode * originalRoot, TreeNode *& copyRoot)
+template <typename DataType>
+inline void BinarySearchTree<DataType>::copy(TreeNode<DataType>* originalRoot, TreeNode<DataType>* &copyRoot)
 {
 	if (originalRoot == nullptr)
 		copyRoot = nullptr;
 	else
 	{
 		// PreOrder to copy the tree
-		copyRoot = new TreeNode;
+		copyRoot = new TreeNode<DataType>;
 		copyRoot->data = originalRoot->data;
 		copy(originalRoot->left, copyRoot->left);
 		copy(originalRoot->right, copyRoot->right);
 	}
 }
 
-void BinarySearchTree::printInOrder()
+template <typename DataType>
+void BinarySearchTree<DataType>::printInOrder()
 {
 	traverseInOrder(root);
 }
 
-void BinarySearchTree::printPreOrder()
+template <typename DataType>
+void BinarySearchTree<DataType>::printPreOrder()
 {
 	traversePreOrder(root);
 }
 
-void BinarySearchTree::printPostOrder()
+template <typename DataType>
+void BinarySearchTree<DataType>::printPostOrder()
 {
 	traversePostOrder(root);
 }
