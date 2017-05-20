@@ -8,34 +8,51 @@
 
 using namespace std;
 
+
+
 int main()
 {
 
 	cout << "CS260 Assignment 5a - Binary Trees, part 1" << endl;
 	cout << "Victor Soriano Mendoza" << endl;
 
-	string pokemon[14] = { "Jynx", "Charmander", "Snorlax", "Clefairy", "Diglett", "Kakuna", "Meowth",
-						   "Nidorino", "Pikachu", "Blastoise", "Squirtle", "Ivysaur", "Bulbasaur", "Abra" };
+	string pokemon[12] = { "Jynx", "Charmander", "Snorlax", "Diglett", "Kakuna", "Meowth",
+						   "Pikachu", "Blastoise", "Squirtle", "Ivysaur", "Bulbasaur", "Abra" };
 	
 	BinarySearchTree tree;
-	
+
+	TreeNode* copycat;
+		
 	tree.batchInsert(pokemon);
-	//tree.insert("Jynx");
-	//tree.insert("Charmander");
-	//tree.insert("Snorlax");
-	//tree.insert("Clefairy");
+	/*tree.insert("Jynx");
+	tree.insert("Charmander");
+	tree.insert("Snorlax");
+	tree.insert("Diglett")*/;
 
 	tree.deleteNode("Squirtle");
 	tree.printInOrder();
+	cout << endl;
 
 	tree.deleteNode("Meowth");
 	tree.printInOrder();
+	cout << endl;
 
 	tree.deleteNode("Blastoise");
 	tree.printInOrder();
+	cout << endl;
 
 	tree.deleteNode("Jynx");
 	tree.printInOrder();
+	cout << endl;
+
+	tree.printInOrderUsingFunctionPointer();
+	cout << endl;
+
+	tree.printPostOrderUsingFunctionPointer();
+	cout << endl;
+	
+	tree.printPreOrderUsingFunctionPointer();
+	cout << endl;
 
 
 
