@@ -13,48 +13,47 @@ using namespace std;
 int main()
 {
 
-	cout << "CS260 Assignment 5a - Binary Trees, part 1" << endl;
-	cout << "Victor Soriano Mendoza" << endl;
+	cout << "CS260, A5-Binary Trees " << endl;
+	cout << "Victor Soriano Mendoza" << endl << endl;
 
 	string pokemon[12] = { "Jynx", "Charmander", "Snorlax", "Diglett", "Kakuna", "Meowth",
 						   "Pikachu", "Blastoise", "Squirtle", "Ivysaur", "Bulbasaur", "Abra" };
 	
 	BinarySearchTree tree;
-
-	TreeNode* copycat;
-		
 	tree.batchInsert(pokemon);
-	/*tree.insert("Jynx");
-	tree.insert("Charmander");
-	tree.insert("Snorlax");
-	tree.insert("Diglett")*/;
-
-	tree.deleteNode("Squirtle");
-	tree.printInOrder();
-	cout << endl;
-
-	tree.deleteNode("Meowth");
-	tree.printInOrder();
-	cout << endl;
-
-	tree.deleteNode("Blastoise");
-	tree.printInOrder();
-	cout << endl;
-
-	tree.deleteNode("Jynx");
-	tree.printInOrder();
-	cout << endl;
+	BinarySearchTree treeCopy(tree);
 
 	tree.printInOrderUsingFunctionPointer();
-	cout << endl;
+	cout << endl << endl;
 
-	tree.printPostOrderUsingFunctionPointer();
-	cout << endl;
+	tree.remove("Squirtle");
+
+	tree.printInOrderUsingFunctionPointer();;
+	cout << endl << endl;
+	tree.remove("Meowth");
+
+	tree.printInOrderUsingFunctionPointer();
+	cout << endl << endl;
+	tree.remove("Blastoise");
+
+	tree.printInOrderUsingFunctionPointer();
+	cout << endl << endl;
+	tree.remove("Jynx");
+
+	tree.printInOrderUsingFunctionPointer();
+	cout << endl << endl;
+
+	treeCopy.printInOrderUsingFunctionPointer();
+	cout << endl << endl;
+
+	treeCopy.printPostOrderUsingFunctionPointer();
+	cout << endl << endl;
 	
-	tree.printPreOrderUsingFunctionPointer();
-	cout << endl;
+	treeCopy.printPreOrderUsingFunctionPointer();
+	cout << endl << endl;
 
-
+	treeCopy.removeAll();
+	treeCopy.printInOrderUsingFunctionPointer();
 
 	return 0;
 }
